@@ -1,0 +1,3 @@
+rootProject.name = 'SectionListScrollSpy'
+
+include ':app'

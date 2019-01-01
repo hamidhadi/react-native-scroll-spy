@@ -33,7 +33,8 @@ export default class App extends Component {
 
   renderItem = ({ item, index, section }) => {
     return(
-      <View key={item.id} style={{ flex: 1, height: 100, backgroundColor: 'white' }}>
+      <View key={item.id} style={{ flex: 1, height: 100, alignItems: 'center', justifyContent: 'center' }}>
+        <Text style={{ color: 'red' }}>{index}</Text>
         <Text>{`${item.first_name} ${item.last_name}`}</Text>
         <Text>{`${item.color}`}</Text>
       </View>
@@ -41,7 +42,7 @@ export default class App extends Component {
   }
 
   renderSectionHeader = ({section: {title}}) => (
-    <View style={{ height: 40, backgroundColor: '#ccc', justifyContent: 'center' }}>
+    <View style={{ height: 40, backgroundColor: '#ccc', justifyContent: 'center', borderTopColor: 'red', borderTopWidth: 1 }}>
     <Text style={{fontWeight: 'bold'}}>{title}</Text>
     </View>
   )
@@ -60,10 +61,14 @@ export default class App extends Component {
     data,
     index,
   ) => {
+    console.log('index -> ', index);
     const layoutTable = layoutTableGenerator(data, 100, 40)
 
     return {length: layoutTable[index].length, offset: layoutTable[index].offset, index}
+    // return {length: 100, offset: index * 200, index}
   }
+
+  keyExtractor = (item, index) => item.id 
 
   render() {
     const sections = this.generateSection()
@@ -71,14 +76,13 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <SectionList
-          style={{ backgroundColor: 'blue' }}
           renderItem={this.renderItem}
           renderSectionHeader={this.renderSectionHeader}
           sections={sections}
-          keyExtractor={(item, index) => item.id}
+          keyExtractor={this.keyExtractor}
           getItemLayout={this.getItemLayout}
           ref={me => this.sectionList = me}
-          maxToRenderPerBatch={20}
+          // maxToRenderPerBatch={20}
         />
         <TouchableOpacity
           style={{
@@ -91,13 +95,14 @@ export default class App extends Component {
 
           onPress={() => {
             if (this.sectionList) {
-              const nextIndex = this.state.activeSectionIndex + 3
+              const nextIndex = 11
+              // const nextIndex = this.state.activeSectionIndex + 3
               if (nextIndex > sections.length) {
-                this.setState({ activeSectionIndex: 0 }, () => this.sectionList.scrollToLocation({ sectionIndex: 0, itemIndex: 0, viewOffset: 40, viewPosition: 0 }))
+                this.setState({ activeSectionIndex: 0 }, () => this.sectionList.scrollToLocation({ sectionIndex: 0, itemIndex: 0, viewPosition: 0 }))
               } else {
                 this.setState({
                   activeSectionIndex: nextIndex
-                }, () => this.sectionList.scrollToLocation({ sectionIndex: nextIndex, itemIndex: 0, viewOffset: 40, viewPosition: 0 }))
+                }, () => this.sectionList.scrollToLocation({ sectionIndex: nextIndex, itemIndex: 0, viewPosition: 0, viewOffset: 40 }))
               }
             }
           }}

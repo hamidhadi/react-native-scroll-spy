@@ -2,6 +2,7 @@ module.exports = (sections, itemHeight, sectionHeaderHeight, sectionFooterHeight
   return sections.reduce((layoutTable, section, sectionIndex) => {
     const layoutTableLastItem = layoutTable[layoutTable.length - 1]
     const currentSectionLayoutTable = []
+    let CSLTLength
 
     currentSectionLayoutTable.push({
       length: sectionHeaderHeight,
@@ -9,7 +10,7 @@ module.exports = (sections, itemHeight, sectionHeaderHeight, sectionFooterHeight
     })
 
     for(let i = 0; i < section.data.length; i++) {
-      let CSLTLength = currentSectionLayoutTable.length
+      CSLTLength = currentSectionLayoutTable.length
 
       currentSectionLayoutTable.push({
         length: itemHeight,
@@ -17,10 +18,10 @@ module.exports = (sections, itemHeight, sectionHeaderHeight, sectionFooterHeight
       })
     }
 
-    CSLTLength += 1
+    CSLTLength = currentSectionLayoutTable.length
     currentSectionLayoutTable.push({
       length: sectionFooterHeight,
-      offset: currentSectionLayoutTableLastItem.offset + currentSectionLayoutTableLastItem.length
+      offset: currentSectionLayoutTable[CSLTLength - 1].offset + currentSectionLayoutTable[CSLTLength - 1].length
     })
 
     return [

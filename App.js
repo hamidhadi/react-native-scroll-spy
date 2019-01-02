@@ -95,8 +95,8 @@ export default class App extends Component {
 
           onPress={() => {
             if (this.sectionList) {
-              const nextIndex = 11
-              // const nextIndex = this.state.activeSectionIndex + 3
+              // const nextIndex = 11
+              const nextIndex = this.state.activeSectionIndex + 3
               if (nextIndex > sections.length) {
                 this.setState({ activeSectionIndex: 0 }, () => this.sectionList.scrollToLocation({ sectionIndex: 0, itemIndex: 0, viewPosition: 0 }))
               } else {
